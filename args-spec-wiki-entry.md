@@ -34,27 +34,27 @@ Each value in `ARGS_SPEC['args']` is a dictionary that describes that arg with t
     * It should be all lower-case, except for things that are always capitalized (acronyms, proper names). Any capitalization rules such as "always capitalize the first letter" will be applied on the workbench side.
         
 * `"type"` (`str`): Must be one of the following:
-        * "boolean" - either `True` or `False` (or something that can be cast to `True` or `False`)
-        * "csv" - a CSV on disk (comma-or-semicolon delimited, possibly with a UTF-8 BOM)
-        * "directory" - a directory that may or may not exist on disk
-        * "file" - a file that may or may not exist on disk
-        * "freestyle_string" - a string that the user may customize with any valid character
-        * "integer" - a unitless whole number (positive or negative) that uniquely identifies something, e.g. a landcover code
-        * "number" - a scalar value.
-        * "option_string" - a string where the value must belong to a set of options.
-        * "percent" - a unitless proportion represented as a value in the range [0, 100]
-        * "raster" - a path to a raster file
-        * "ratio" - a unitless proportion represented as a value in the range [0, 1]
-        * "vector" - a path to a vector file
+    * "boolean" - either `True` or `False` (or something that can be cast to `True` or `False`)
+    * "csv" - a CSV on disk (comma-or-semicolon delimited, possibly with a UTF-8 BOM)
+    * "directory" - a directory that may or may not exist on disk
+    * "file" - a file that may or may not exist on disk
+    * "freestyle_string" - a string that the user may customize with any valid character
+    * "integer" - a unitless whole number (positive or negative) that uniquely identifies something, e.g. a landcover code
+    * "number" - a scalar value.
+    * "option_string" - a string where the value must belong to a set of options.
+    * "percent" - a unitless proportion represented as a value in the range [0, 100]
+    * "raster" - a path to a raster file
+    * "ratio" - a unitless proportion represented as a value in the range [0, 1]
+    * "vector" - a path to a vector file
         
 * `"required"` (`bool | str`): Optional, defaults to `True`.
-        * If `True`, the input is required.
-        * If `False`, the input is optional.
-        * If a string, the string must be evaluate-able as a python expression, which must evaluate to a `bool`.
-          The input is conditionally required based on the result of valuation.
-          If any args keys are provided within the expression, they will evaluate to either
-          `True` or `False` depending on whether the key-value pair is present in `args`,
-          there is a value associated with that key, and that value is truthy.
+    * If `True`, the input is required.
+    * If `False`, the input is optional.
+    * If a string, the string must be evaluate-able as a python expression, which must evaluate to a `bool`.
+      The input is conditionally required based on the result of valuation.
+      If any args keys are provided within the expression, they will evaluate to either
+      `True` or `False` depending on whether the key-value pair is present in `args`,
+      there is a value associated with that key, and that value is truthy.
           
 * `"about"` (`str`): Human-friendly plain text description of this input.
 
@@ -64,34 +64,34 @@ Each value in `ARGS_SPEC['args']` is a dictionary that describes that arg with t
    
    These are described for each type:
     - for type `"option_string"`:
-      * "options" (`list[str]`, required): A list of the allowed options. Dropdown menu options in the UI are made from this list, and this arg's value is validated against this list.
+       - `"options"` (`list[str]`, required): A list of the allowed options. Dropdown menu options in the UI are made from this list, and this arg's value is validated against this list.
       
     - for type "number":
-       * units (`pint.Unit`, required): A `pint.Unit` object that represents the arg's units e.g. meter, kilowatt-hour, etc.
+       - `"units"` (`pint.Unit`, required): A `pint.Unit` object that represents the arg's units e.g. meter, kilowatt-hour, etc.
          Note: to be compatible, all `Unit`s must belong to the same `pint.UnitRegistry` instance initialized in
          `src/natcap/invest/utils.py`.
          
     - for type "vector":
-      * "geometries" (`set{str}`, required): A set of geometry names that are allowed
-      * "fields" (`dict`, required):
+      * `"geometries`" (`set{str}`, required): A set of geometry names that are allowed
+      * `"fields"` (`dict`, required):
       Allowed sub-types: number, ratio, percent, code, freestyle_string, option_string
       
     - for type "raster":
-      * "bands" (`dict`, required): 
+      * `"bands"` (`dict`, required): 
        Allowed sub-types: number, ratio, percent, code
     
     - for type "directory":
-      * "contents" (dict, required): A dictionary mapping each row name to a nested arg dictionary describing the data in that row
+      * `"contents"` (dict, required): A dictionary mapping each row name to a nested arg dictionary describing the data in that row
       Allowed sub-types: directory, csv, raster, vector, file
        
     - for type "csv":
       The arg may not have both "columns" and "rows". It should use the one that best describes the table, such that 
       It's okay not to include either if the table is too complex to describe this way, such as >2 dimensional tables,
       tables with sub-tables, and tables that are parsed by row/column indices rather than names.
-      * "columns" (dict, optional): 
+      * `"columns"` (dict, optional): 
       The value of the "columns" or "rows" key is a dictionary mapping each column name to a nested arg dictionary 
       describing the data in that column. 
-         Example: Here is a simple table that's expected to have the columns "lucode" and "name".
+         Example: Here is a simple table that has the columns "lucode" and "name".
          | lucode | name   |
          |--------|--------|
          | 1      | road   |
@@ -102,17 +102,17 @@ Each value in `ARGS_SPEC['args']` is a dictionary that describes that arg with t
          ```
          "columns": {
             "lucode": {
-               "type": "code",
-               "about": "
+               "type": "integer",
+               "about": "LULC code"
             },
             "name": {
                "type": "freestyle_string",
-               "about": "description of the LULC code"
+               "about": "description of the LULC class"
             }
          }
          ```
-      * "rows" (dict, optional):
-        Example: Here is a simple table that's expected to have the rows "radius" and "height".
+      * `"rows"` (`dict`, optional):
+        Example: Here is a simple table that has the rows "radius" and "height".
          |            |    |
          | ---------- | -- |
          | **radius** | 20 |
