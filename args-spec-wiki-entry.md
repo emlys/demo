@@ -1,29 +1,46 @@
-## The ARGS_SPEC
+# The ARGS_SPEC
 
 All InVEST models will own a data structure with information about the model’s inputs.
 This will be a dictionary (`ARGS_SPEC`) with the structure detailed below.
+
+## Purpose
 The purpose of the `ARGS_SPEC` is to document the model's inputs to a level of detail sufficient that 
 someone with no prior knowledge of the model could create inputs that are structurally and mathematically valid.
+
+Current uses of the ARGS_SPEC are:
+- in a validation function, reducing the amount of work needed to properly and effectively validate model inputs.
+- to generate portions of the user's guide that cover the same content.
+- in the workbench UI, to label and describe input fields.
+
+## Contents
 *(Note that this is distinct from creating inputs that are scientifically valid. 
 Contextual information about finding data, choosing appropriate values, etc. belongs in the user's guide and not in the `ARGS_SPEC`.)*
 
-The `ARGS_SPEC` is used in a validation function, reducing the amount of work needed to properly and effectively validate model inputs.
-In the future, the `ARGS_SPEC` may also be used to generate portions of the user's guide that cover the same content.
-
-### ARGS_SPEC
+## Structure
 The `ARGS_SPEC` dictionary's keys are:
 
-* `"model_name"` (`str`): The human-readable name of the model (e.g. “Habitat Risk Assessment”)
-* `"module"` (`str`): The python-importable module name (e.g. “natcap.invest.hra”). In practice, use `__name__`
-* `"userguide_html"` (`str`): The html page of the UG for this model, relative to the sphinx HTML build root (e.g. “habitat_risk_assessment.html”)
-* `"args_with_spatial_overlap"` (`dict`): 
-    This is an optional dictionary with two recognized keys:
+### `model_name`
+type: `str` 
+The human-readable name of the model (e.g. “Habitat Risk Assessment”).
+
+### `module`
+type: str
+The python-importable module name (e.g. “natcap.invest.hra”). In practice, use `__name__`
+
+### `userguide_html` 
+type: `str`
+The html page of the UG for this model, relative to the sphinx HTML build root (e.g. “habitat_risk_assessment.html”)
+
+### `args_with_spatial_overlap`
+Optional
+type: `dict`
+This is an optional dictionary with two recognized keys:
     * `"spatial_keys"` (`list[str]`): list of arg keys in `ARGS_SPEC['args']` that are spatial inputs
     * `"different_projections_ok"` (`bool`): Whether it's okay for the rasters and/or vectors in `spatial_keys` to have different projections
-* `"args"` (`dict`): 
-    This is a dictionary describing all of the model's arguments (inputs). 
-    It maps unique arg identifiers to dictionaries that describe each arg.
-    Keys are strings and are often similar to the corresponding arg `name`, but use underscores instead of spaces, are often shorter, and use abbreviations.
+    
+### `args`
+type: `dict`
+This is a dictionary describing all of the model's arguments (inputs). It maps unique arg identifiers to dictionaries that describe each arg. Keys are strings and are often similar to the corresponding arg `name`, but use underscores instead of spaces, are often shorter, and use abbreviations.
 
 #### ARGS_SPEC args
 
