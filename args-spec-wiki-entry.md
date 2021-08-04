@@ -13,26 +13,27 @@ In the future, the `ARGS_SPEC` may also be used to generate portions of the user
 ### ARGS_SPEC
 The `ARGS_SPEC` dictionary's keys are:
 
-* "model_name" (str): The human-readable name of the model (e.g. “Habitat Risk Assessment”)
-* "module" (str): The python-importable module name (e.g. “natcap.invest.hra”). In practice, use `__name__`
-* "userguide_html" (str): The html page of the UG for this model, relative to the sphinx HTML build root (e.g. “habitat_risk_assessment.html”)
-* "args_with_spatial_overlap" (dict): 
-    This is a dictionary with two recognized keys:
-    * "spatial_keys" (list[str]): list of arg keys in `ARGS_SPEC['args']` that are spatial inputs
-    * "different_projections_ok" (bool): Whether it's okay for the rasters and/or vectors in `spatial_keys` to have different projections
-* "args" (dict): 
+* `"model_name"` (`str`): The human-readable name of the model (e.g. “Habitat Risk Assessment”)
+* `"module"` (`str`): The python-importable module name (e.g. “natcap.invest.hra”). In practice, use `__name__`
+* `"userguide_html"` (`str`): The html page of the UG for this model, relative to the sphinx HTML build root (e.g. “habitat_risk_assessment.html”)
+* `"args_with_spatial_overlap"` (`dict`): 
+    This is an optional dictionary with two recognized keys:
+    * `"spatial_keys"` (`list[str]`): list of arg keys in `ARGS_SPEC['args']` that are spatial inputs
+    * `"different_projections_ok"` (`bool`): Whether it's okay for the rasters and/or vectors in `spatial_keys` to have different projections
+* `"args"` (`dict`): 
     This is a dictionary describing all of the model's arguments (inputs). 
     It maps unique arg identifiers to dictionaries that describe each arg.
     Keys are strings and are often similar to the corresponding arg `name`, but use underscores instead of spaces, are often shorter, and use abbreviations.
 
 #### ARGS_SPEC args
-    Each value in `ARGS_SPEC['args']` is a dictionary that describes that arg with the following properties:
+
+Each value in `ARGS_SPEC['args']` is a dictionary that describes that arg with the following properties:
     
-    * "name": The human-readable name of this input. The workbench UI displays the "name" property as a label for each input. As such, we want to keep them consistent:
-        * The name should be as short as possible. Extra description should go in "about" which becomes the tooltip text.
-        * It should be all lower-case, except for things that are always capitalized (acronyms, proper names). Any capitalization rules such as "always capitalize the first letter" will be applied on the workbench side.
+* `"name"` (`str`): The human-readable name of this input. The workbench UI displays the "name" property as a label for each input. As such, we want to keep them consistent:
+    * The name should be as short as possible. Extra description should go in "about" which becomes the tooltip text.
+    * It should be all lower-case, except for things that are always capitalized (acronyms, proper names). Any capitalization rules such as "always capitalize the first letter" will be applied on the workbench side.
         
-    * "type" (str): Must be one of the following:
+* `"type"` (`str`): Must be one of the following:
         * "boolean" - either `True` or `False` (or something that can be cast to `True` or `False`)
         * "csv" - a CSV on disk (comma-or-semicolon delimited, possibly with a UTF-8 BOM)
         * "directory" - a directory that may or may not exist on disk
@@ -46,7 +47,7 @@ The `ARGS_SPEC` dictionary's keys are:
         * "ratio" - a unitless proportion represented as a value in the range [0, 1]
         * "vector" - a path to a vector file
         
-    * "required" (`bool | str`): Optional, defaults to `True`.
+* `"required"` (`bool | str`): Optional, defaults to `True`.
         * If `True`, the input is required.
         * If `False`, the input is optional.
         * If a string, the string must be evaluate-able as a python expression, which must evaluate to a `bool`.
@@ -55,7 +56,7 @@ The `ARGS_SPEC` dictionary's keys are:
           `True` or `False` depending on whether the key-value pair is present in `args`,
           there is a value associated with that key, and that value is truthy.
           
-    * "about" (str): Human-friendly plain text description of this input.
+* `"about"` (`str`): Human-friendly plain text description of this input.
 
    Each arg dictionary may have additional required or optional attributes specific to its type.
    Four types (`"raster"`, `"vector"`, `"csv"`, `"directory"`) can contain multiple nested data types
