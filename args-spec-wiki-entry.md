@@ -174,4 +174,20 @@ Style guidelines:
          }
          ```
          
-    
+## Style Guidelines for the `about` Text
+
+### `boolean`s
+The `about` text should say what happens when the value is `True`, beginning with an imperative: "Run the valuation model.", "Calculate flow direction from the provided DEM." This is more concise than phrasing like "Whether or not to ...". Avoid phrases like "If checked," "If selected,", "Check this box to..." which reference that the UI displays a checkbox for boolean types. The `about` text should be independent of the UI.
+  
+### `number` `expression`s
+The `expression` can be any python expression and so can't be auto-documented into a user-friendly sentence. Any restrictions on numbers must also be described in the `about` text. For example, if the `expression` is `"value >= 0"`, the `about` text should say something like, "Must be greater than or equal to 0."
+
+### conditional requirements 
+The `required` value can be any python expression and so can't be auto-documented into a user-friendly sentence. Any conditional requirement must also be described in the `about` text. For example, if the `required` value is `"run_valuation"`, the `about` text should say something like, "Required if Run Valuation is selected."
+
+### cross-referencing values
+Values that are cross-referenced across multiple inputs, like LULC codes in a LULC raster and biophysical table, need to be documented. The args spec doesn't store this dependency info at all. We like this phrasing to explain the dependency between input values: "All values in X must have corresponding entries in Y". For example, "All values in this raster must have corresponding entries in the Biophysical Table."
+
+### square bracket notation
+Suggested phrasing to explain the square bracket notation used with non-static column names:
+“Replace [XYZ] with <thing> names matching those in the <other thing>, so that there is one column for each <thing>.” Such as for the **foraging_activity_[SEASON]_index** columns in Pollination: “Replace [SEASON] with season names matching those in the Biophysical Table, so that there is one column for each season.”
